@@ -1,10 +1,10 @@
-@php
-    use App\Services\BookService;
-@endphp
+@push('scripts')
+    <script src="{{ asset('/js/book/api.js') }}"></script>
+@endpush
 
 <x-layouts.app>
 
-    <div x-data="{ isSearchLoaderShown : false }">
+    <search-wrapper x-data="{ isSearchLoaderShown : false }">
 
         <x-h1>
             Find your books
@@ -29,9 +29,9 @@
         </form>
 
         @if ( $errors )
-            <p class="my-4">
+            <error-message class="my-4">
                 Something went wrong with your search. Please try again later.
-            </p>
+            </error-message>
         @endif
 
         <x-search.loader />
@@ -39,28 +39,27 @@
         @isset( $result )
 
             <h2 class="font-semibold text-3xl w-full my-8">
+
                 <a href="/search" class=" float-right flex items-center gap-1 mt-2 border-transparent hover:border-accent min-w-max text-sm">
                     <x-i icon="circle-x" size="sm" />
                     Clear results
                 </a>
+
                 Search results for: <br />
-                <span class="text-accent">
+
+                <search-query class="text-accent">
                     {{ $query }}
-                </span>
+                </search-query>
             </h2>
 
-            <div class="grid gap-8">
+            <search-results class="grid gap-8">
                 @foreach ( $result as $book )
-                    <x-search.book :$book hasBook="{{ $book['hasBook'] }}">
-                        @if( !$book['hasBook'] )
-                            <x-search.add-book-modal :$book />
-                        @endif
-                    </x-search.book>
+                    <x-search.book :$book hasBook="{{ $book['hasBook'] }}" />
                 @endforeach
-            </div>
+            </search-results>
 
         @endisset
 
-    </div>
+    </search-wrapper>
 
 </x-layouts.app>

@@ -1,7 +1,40 @@
 
-function updateUiTags(tags, id) {
-    const tagListEl = document.querySelector('#tagList-' + id)
-    if( !tagListEl ) return
+document.addEventListener('alpine:init', () => {
+    Alpine.data('updateTags', (book) => ({
+
+        init() {
+            this.$watch( () => [this.tags, this.showModal, this.showEdit] , () => {
+
+                this.tagList = getTagList( this.tags )
+                this.checkIfHasTags()
+                updateUiTags(this.tagList, book.id)
+
+                // Close without saving changes and reset modal
+                if( !this.showModal ) {
+                    this.tags = JSON.parse(book.tags).join(' ').trim() || ''
+                    this.checkIfHasTags()
+                    this.showEdit = false
+                }
+            })
+        },
+
+        tags : book && JSON.parse(book.tags).join(' ').trim() || '',
+        tagList : [],
+        status : 'initial',
+
+        showModal : false,
+        showEdit : false,
+        hasTags : false,
+
+        checkIfHasTags()  {
+            this.hasTags = !( !this.tags || this.tags.trim() ===  '')
+        }
+    }))
+})
+
+function getTagList( tags ) {
+
+    if( !tags ) return []
 
     const tagsFormatted = tags
         .replaceAll('<', '')
@@ -11,12 +44,21 @@ function updateUiTags(tags, id) {
     const tagsArray = tagsFormatted.split(' ')
     const tagsArrayUnique = Array.from( new Set(tagsArray) ).filter(t => t !== '')
 
+    return tagsArrayUnique.length > 0 ? tagsArrayUnique : []
+}
+
+function updateUiTags(tagArray, id) {
+
+    if( !Array.isArray(tagArray) ) return
+
+    const tagListEl = document.querySelector('#tagList-' + id)
+    if( !tagListEl ) return
+
     tagListEl.textContent = ''
-    if( tagsArrayUnique.length === 0 ) return
 
-    const tagsListHtml = tagsArrayUnique.map( t => `
-        <a href="/books/tag/${t}">#${t}</a>
-    `).join(' ')
+    const tagListHtml = tagArray.map( tag => `
+        <a href="/books/tag/${tag}">#${tag}</a>
+    `)
 
-    tagListEl.insertAdjacentHTML('beforeEnd', tagsListHtml)
+    tagListEl.insertAdjacentHTML('beforeEnd', tagListHtml.join(' ') )
 }

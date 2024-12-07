@@ -1,7 +1,7 @@
 <button
     type="submit"
     @class([
-        'relative flex items-center justify-center gap-2 py-3 px-6 font-semibold rounded hover:scale-[1.03] transition-all duration-75 text-md disabled:hover:scale-100 ',
+        'relative flex items-center justify-center gap-2 py-3 px-6 font-semibold rounded hover:scale-[1.03] transition-all duration-75 text-md disabled:hover:scale-100 disabled:opacity-70',
         'bg-accent text-background' => $variant === 'accent',
         'bg-transparent text-text' => $variant === 'ghost',
         $class

@@ -1,152 +1,135 @@
 @php
-    // @todo move js into separate folder, add try/catch
     $book_key = str_replace('/works/', '', $book['key']);
     $book_authors = $book['author_name'] ?? [];
     $book_tags = $bookService->formatExternalBookTags( $book['subject'] ?? []);
 @endphp
 
-<div
-    x-cloak
-    x-show="isModalOpen"
-    x-data="{
-        isAdding : false,
-        isAdded : false,
-        isError : false,
-        async addBook() {
-            this.isAdding = true
-            const formData = new FormData({{ $book_key }})
-            const entries = formData.entries()
-            const body = JSON.stringify( Object.fromEntries( entries ) )
-            const token = document.querySelector('#csrf').content
-            const response = await fetch('/api/books', {
-                method : 'POST',
-                body,
-                headers : {
-                    'Accept' : 'application/json',
-                    'Content-Type' : 'application/json;charset=UTF-8',
-                    'X-CSRF-TOKEN' : token
+<x-layout.modal>
+
+    <add-book-modal
+        x-data="{
+            status : 'initial',
+
+            async addBookHandler() {
+                this.status = 'loading'
+
+                const formData = new FormData({{ $book_key }})
+                const entries = formData.entries()
+                const body = JSON.stringify( Object.fromEntries( entries ) )
+
+                const response = await $store.booksApi.create(body)
+                if( response.id ) {
+                    this.status = 'success'
+                    hasBook = true
+                } else {
+                    this.status = 'error'
                 }
-            })
-            if( response.ok ) {
-                this.isAdded = true
-            } else {
-                this.isAdding = false
-                this.isError = true
-            }
-        }
-    }"
-    x-transition
-    class="fixed inset-0 z-50 bg-primary-light/90 grid place-items-center"
->
-    <form
-        method="POST"
-        action="/api/books"
-        id="{{ $book_key }}"
-        class="relative grid gap-2 bg-background p-6 min-w-[300px] max-w-[90vw] md:max-w-lg rounded-md"
-        x-on:click.outside="isModalOpen = false"
-        x-on:submit.prevent="() => {
-            addBook()
-            hasBook = true
+            },
         }"
     >
+        <form
+            method="POST"
+            id="{{ $book_key }}"
+            class="relative grid gap-2"
+            x-on:submit.prevent="addBookHandler()"
+        >
 
-        <input type="hidden" name="key" value="{{ $book['key'] }}" />
-        <input type="hidden" name="title" value="{{ $book['title'] }}" />
-        <input type="hidden" name="authors" value="{{ json_encode($book_authors)  }}" />
+            <input type="hidden" name="key" value="{{ $book['key'] }}" />
+            <input type="hidden" name="title" value="{{ $book['title'] }}" />
+            <input type="hidden" name="authors" value="{{ json_encode($book_authors)  }}" />
 
-        @isset($book['number_of_pages_median'])
-            <input type="hidden" name="page_count" value="{{ $book['number_of_pages_median'] }}" />
-        @endisset
-
-        @isset($book['cover_edition_key'])
-            <input
-                type="hidden"
-                name="cover_url"
-                value="https://covers.openlibrary.org/b/olid/{{ $book['cover_edition_key'] }}.jpg"
-            />
-        @endisset
-
-        <h2>
-            Adding book <br />
-            <span class="font-semibold text-xl">
-                {{ $book['title'] }}
-            </span>
-        </h2>
-
-        <label class="flex items-center gap-1">
-            <x-form.checkbox name="is_read" />
-            I have read this book
-        </label>
-
-        <label class="flex items-center gap-1">
-            <x-form.checkbox name="is_owned" />
-            I own this book
-        </label>
-
-        <div>
-            Suggested tags: <br />
-            @if( count($book_tags) > 0 )
-                <div class="flex items-center flex-wrap gap-3 mt-2 text-sm">
-                    @foreach ($book_tags as $tag)
-                        <div
-                            x-ref="tag{{ $loop->index }}"
-                            class="flex items-center gap-1 bg-primary-light/30 rounded-lg px-2 py-1"
-                        >
-                            <span>
-                                #{{ $tag }}
-                                <input type="hidden" name="tag{{ $loop->index }}" value="{{ $tag }}" />
-                            </span>
-                            <button
-                                type="button"
-                                x-on:click="$refs.tag{{ $loop->index }}.remove()"
-                            >
-                                <x-i icon="x-circle" size="sm" />
-                            </button>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                No suggested tags
+            @isset($book['number_of_pages_median'])
+                <input type="hidden" name="page_count" value="{{ $book['number_of_pages_median'] }}" />
             @endisset
-        </div>
 
-        <x-form.button x-show="!isAdded">
-            <x-form.button-icon >
-                <x-i icon="loader-circle" size="md" class=" animate-spin" x-show="isAdding" />
-                <x-i icon="square-plus" size="md" x-show="!isAdding"/>
-            </x-form.button-icon>
-            <span x-show="isAdding">
-                Adding Book...
+            @isset($book['cover_edition_key'])
+                <input
+                    type="hidden"
+                    name="cover_url"
+                    value="https://covers.openlibrary.org/b/olid/{{ $book['cover_edition_key'] }}.jpg"
+                />
+            @endisset
+
+            <h2 class="font-semibold">
+                {{ $book['title'] }}
+            </h2>
+
+            <label class="flex items-center gap-1">
+                <x-form.checkbox name="is_read" />
+                I have read this book
+            </label>
+
+            <label class="flex items-center gap-1">
+                <x-form.checkbox name="is_owned" />
+                I own this book
+            </label>
+
+            <suggested-tags>
+
+                <h2 class="font-semibold">
+                    Suggested tags:
+                </h2>
+
+                @if( count($book_tags) > 0 )
+
+                    <suggested-tags-wrapper class="flex items-center flex-wrap gap-3 mt-2 text-sm">
+
+                        @foreach ($book_tags as $tag)
+
+                            <suggested-tag
+                                x-ref="tag{{ $loop->index }}"
+                                class="flex items-center gap-1 bg-primary-light/30 rounded-lg px-2 py-1"
+                            >
+                                <span>
+                                    #{{ $tag }}
+                                    <input type="hidden" name="tag{{ $loop->index }}" value="{{ $tag }}" />
+                                </span>
+                                <button
+                                    type="button"
+                                    x-on:click="$refs.tag{{ $loop->index }}.remove()"
+                                >
+                                    <x-i icon="x-circle" size="sm" />
+                                </button>
+                            </suggested-tag>
+
+                        @endforeach
+
+                    </suggested-tags-wrapper>
+                @else
+                    No suggested tags
+                @endisset
+            </suggested-tags>
+
+            <x-form.button x-show="status === 'loading' || status === 'initial'">
+                <x-slot:icon >
+                    <x-i icon="square-plus" size="md" x-show="status === 'initial'" />
+                    <x-i icon="loader-circle" size="md" class=" animate-spin" x-show="status === 'loading'" />
+                </x-slot:icon>
+                <span x-show="status === 'initial'">
+                    Add Book
+                </span>
+                <span x-show="status === 'loading'">
+                    Adding Book...
+                </span>
+            </x-form.button>
+
+            <span
+                class="relative w-fit mx-auto text-md font-semibold flex items-center gap-1 py-3 px-6"
+                x-show="status === 'success'"
+            >
+                <x-i icon="circle-check" size="md" />
+                Book added successfully!
             </span>
-            <span x-show="!isAdding">
-                Add Book
+
+            <span class="flex items-center justify-center gap-1" x-show="status === 'success'">
+                <a href="/books">View your bookshelf</a>
             </span>
-        </x-form.button>
 
-        <span
-            class="relative w-fit mx-auto text-md font-semibold flex items-center gap-1 py-3 px-6"
-            x-show="isAdded"
-        >
-            <x-i icon="circle-check" size="md" />
-            Book added successfully!
-        </span>
+            <span x-show="status === 'error'">
+                Something went wrong. Please try again later.
+            </span>
 
-        <span class="flex items-center justify-center gap-1" x-show="isAdded">
-            <a href="/books">View your bookshelf</a>
-        </span>
+        </form>
 
-        <span x-show="isError">
-            Something went wrong. Please try again later.
-        </span>
-
-        <button
-            type="button"
-            x-on:click="isModalOpen = false"
-            class="absolute top-2 right-2 hover:text-accent"
-        >
-            <x-i icon="circle-x" size="md" />
-        </button>
-
-    </form>
-
-</div>
+    </add-book-modal>
+</x-layout.modal>

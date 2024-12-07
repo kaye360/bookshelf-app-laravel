@@ -1,14 +1,20 @@
 <x-layouts.app>
 
-    <div class="grid grid-cols-2 gap-12 items-center">
+    <login-columns class="grid grid-cols-2 w-fit mx-auto  gap-24 mt-12 items-center">
 
-        <div class="grid gap-4">
+        <login-form class="grid gap-4">
 
             <x-h1>
                 Sign in to your account
             </x-h1>
 
-            <form method="POST" action="/login" class="grid gap-5">
+            <form
+                method="POST"
+                action="/login"
+                class="grid gap-5"
+                x-data="{ status : 'initial' }"
+                x-on:submit="status = 'loading'"
+            >
                 @csrf
 
                 <label>
@@ -18,7 +24,7 @@
 
                 <label>
                     <span class="font-semibold">Password</span><br />
-                    <x-form.input type="text" name="password" />
+                    <x-form.input type="password" name="password" />
                 </label>
 
                 @if( $errors->any() )
@@ -27,12 +33,13 @@
                     </span>
                 @enderror
 
-                {{-- @todo add loading spinners and button disabled --}}
-                <x-form.button>
-                    <x-form.button-icon>
-                        <x-i icon="log-in" size="md" class="icon-md mr-auto" />
-                    </x-form.button-icon>
-                    Login
+                <x-form.button x-bind:disabled="status === 'loading'">
+                    <x-slot:icon>
+                        <x-i icon="log-in" size="md" x-show="status === 'initial'" />
+                        <x-i icon="loader-circle" size="md" class="animate-spin" x-show="status === 'loading'" x-cloak />
+                    </x-slot:icon>
+                    <span x-show="status === 'initial'">Login</span>
+                    <span x-show="status === 'loading'" x-cloak>Logging in...</span>
                 </x-form.button>
 
                 <span>
@@ -40,9 +47,9 @@
                 </span>
 
             </form>
-        </div>
+        </login-form>
 
         <img src="{{ asset('img/books-table-1.webp') }}" />
 
-    </div>
+    </login-columns>
 </x-layouts.app>

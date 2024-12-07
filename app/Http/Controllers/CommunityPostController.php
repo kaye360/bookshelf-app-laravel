@@ -11,7 +11,12 @@ class CommunityPostController extends Controller
 {
     public function index()
     {
-        $communityPosts = CommunityPost::all()->sortByDesc('created_at');
+        // $communityPosts = CommunityPost::all()->sortByDesc('created_at');
+        $communityPosts = CommunityPost::orderBy('updated_at', 'desc')->get()
+            ->groupBy(['username','type'])
+            ->map( fn($group) => $group->values()->toArray() )
+            ->collapse()
+            ->toArray();
         return view('community', [
             'community_posts' => $communityPosts
         ]);

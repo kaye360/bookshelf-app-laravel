@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components\book;
+namespace App\View\Components\layout;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class tagsModal.php extends Component
+class logoIcon extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class tagsModal.php extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.book.tags-modal.php');
+        return view('components.layout.logo-icon');
     }
 }

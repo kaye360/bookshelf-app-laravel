@@ -23,12 +23,21 @@ class BookService {
      */
     public function formatExternalBook(mixed $validated)
     {
+        // External API book Key
         $validated['key'] = str_replace('/works/', '', $validated['key']);
 
         // Tags
-        $tags = $this->formatExternalBookTags( $validated['subject'] ?? [] );
-        $validated = array_filter( $validated, fn($key) => !str_contains($key, 'tag'), ARRAY_FILTER_USE_KEY);
-        $validated['tags'] = json_encode($tags);
+        $tags = array_filter( $validated, fn($key) => str_contains($key, 'tag'), ARRAY_FILTER_USE_KEY);
+        $tags = array_values( $tags );
+        $validated['tags'] = json_encode( $this->formatExternalBookTags( $tags ) );
+
+        // Delete old tag keys. (tag0, tag1 etc.)
+        $validated = array_filter( $validated, fn($key) =>
+            $key === 'tags' || !str_contains($key, 'tag'),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        // dd($validated);
 
         // User ID
         $validated['user_id'] = Auth::user()->id;

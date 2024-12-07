@@ -1,7 +1,7 @@
 <li>
     <a
         href="{{ $href }}"
-        class="flex flex-col md:flex-row gap-1 items-center px-2 py-1 hover:bg-primary-light font-medium border-none rounded text-sm font-theme">
+        class="flex flex-col md:flex-row gap-1 items-center border-0 text-primary-dark hover:text-accent font-theme text-xl transition-colors duration-200">
         {{ $slot }}
     </a>
 </li>

@@ -4,13 +4,14 @@
 
 :root {
     --color-primary-dark  : 210deg 23% 40%;
+    --color-primary-mid  : 210deg 23% 65%;
     --color-primary-light : 210deg 23% 85%;
     --color-accent        : 0deg 65% 60%;
     /* --color-text          : 210deg 23% 40%; */
     /* --color-background        : 30deg 38% 99%; */
     /* --color-background-accent : 30deg 38% 96%; */
     --color-text              : 210deg 23% 20%;
-    --color-background        : 34deg 19% 93%;
+    --color-background        : 34deg 19% 98%;
     --color-background-accent : 34deg 19% 96%;
 }
 

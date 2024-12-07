@@ -23,7 +23,16 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('bookshelf');
+        $tags = Book::where('user_id', Auth::user()->id)
+            ->pluck('tags')
+            ->map( fn( $item ) => json_decode($item, true) )
+            ->flatten()
+            ->countBy()
+            ->sortByDesc( fn($count) => $count )
+            ->slice(0,10)
+            ->map( fn( $count, $tag) => [ 'tag' => $tag, 'count' => $count ])
+            ->values();
+        return view('bookshelf', ['tags' => $tags]);
     }
 
     /**
@@ -42,6 +51,7 @@ class BookController extends Controller
      */
     public function store(CreateBookRequest $request)
     {
+        // dd($request->validated());
         $formatted = $this->bookService->formatExternalBook( $request->validated() );
         $book = Book::create($formatted);
         $this->bookService->createCommunityPost($book, ['create_book' => true]);

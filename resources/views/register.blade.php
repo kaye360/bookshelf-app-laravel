@@ -1,6 +1,6 @@
 <x-layouts.app>
 
-    <div class="grid grid-cols-2 gap-12 items-center">
+    <register-columns class="grid grid-cols-2 mx-auto w-fit gap-24 items-center">
 
         <div class="grid gap-4">
             <x-h1>
@@ -51,9 +51,9 @@
                 </label>
 
                 <x-form.button>
-                    <x-form.button-icon>
+                    <x-slot:icon>
                         <x-i icon="user-plus" size="md" class="icon-md mr-auto" />
-                    </x-form.button-icon>
+                    </x-slot:icon>
                     Sign Up
                 </x-form.button>
 
@@ -67,6 +67,6 @@
 
         <img src="{{ asset('img/books-table-2.webp') }}" />
 
-    </div>
+    </register-columns>
 
 </x-layouts.app>

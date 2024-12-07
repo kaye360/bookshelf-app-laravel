@@ -1,5 +1,6 @@
-<x-layout.modal x-show="showModal">
-    <div class="grid gap-4 py-4">
+
+<x-layout.modal>
+    <delete-book-modal class="grid gap-4 py-4">
 
         <span class="flex gap-3 text-lg">
             <x-i icon="circle-x" size="lg" class="stroke-accent" />
@@ -53,5 +54,5 @@
             Something went wrong, please try again later.
         </x-form.button>
 
-    </div>
+    </delete-book-modal>
 </x-layout.modal>

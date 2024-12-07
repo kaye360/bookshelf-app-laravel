@@ -13,7 +13,8 @@ class cover extends Component
      */
     public function __construct(
         public ?string $src = null,
-        public string $title
+        public string $size = 'lg',
+        public string $title,
     )
     {
         //

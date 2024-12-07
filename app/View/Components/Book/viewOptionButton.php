@@ -6,14 +6,12 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class actionButtonList extends Component
+class viewOptionButton extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public string $book
-    )
+    public function __construct()
     {
         //
     }
@@ -23,6 +21,6 @@ class actionButtonList extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.book.action-button-list');
+        return view('components.book.view-option-button');
     }
 }

@@ -5,10 +5,11 @@ export default {
         extend: {
             fontFamily: {
                 'base': ['Plus Jakarta Sans', 'Helvetica', 'system-ui', 'sans-serif'],
-                'theme': ['Ledger', 'Courgette', 'Helvetica', 'system-ui', 'sans-serif'],
+                'theme': ['Fredoka', 'Helvetica', 'system-ui', 'sans-serif'],
             },
             colors: {
                 "primary-dark": "hsl( var(--color-primary-dark) / <alpha-value> )",
+                "primary-mid": "hsl( var(--color-primary-mid) / <alpha-value> )",
                 "primary-light": "hsl( var(--color-primary-light) / <alpha-value> )",
                 "accent": "hsl( var(--color-accent) / <alpha-value> )",
                 "text": "hsl( var(--color-text  ) / <alpha-value> )",
