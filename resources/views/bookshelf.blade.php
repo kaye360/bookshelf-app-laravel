@@ -1,6 +1,3 @@
-@php
-    // dd($tags)
-@endphp
 @push('scripts')
     <script src="{{ asset('/js/book/api.js') }}"></script>
     <script src="{{ asset('/js/book/viewOptions.js') }}"></script>
@@ -64,32 +61,36 @@
             </current-filter>
 
             {{-- Book Loop --}}
-            <book-list-card
-                x-show="$store.viewOptions.view === 'card'"
-                class="grid items-start grid-cols-[repeat(auto-fill,minmax(275px,1fr))] gap-8"
-            >
-                <template x-for="book in renderBookShelf" :key="book.id" >
-                    <x-book.views.card />
-                </template>
-            </book-list-card>
 
-            <book-list-item
-                x-show="$store.viewOptions.view === 'list'"
-                class="grid items-start gap-2"
-            >
-                <template x-for="book in renderBookShelf" :key="book.id">
-                    <x-book.views.list-item />
-                </template>
-            </book-list-item>
+            <template x-if="$store.viewOptions.view === 'card'">
+                <book-list-card
+                    class="grid items-start grid-cols-[repeat(auto-fill,minmax(275px,1fr))] gap-8"
+                >
+                    <template x-for="book in renderBookShelf" :key="book.id" >
+                        <x-book.views.card />
+                    </template>
+                </book-list-card>
+            </template>
 
-            <book-list-grid
-                x-show="$store.viewOptions.view === 'grid'"
-                class="grid items-start grid-cols-[repeat(auto-fit,150px)] justify-start gap-8 content-start"
-            >
-                <template x-for="book in renderBookShelf" :key="book.id">
-                    <x-book.views.grid />
-                </template>
-            </book-list-grid>
+            <template x-if="$store.viewOptions.view === 'list'">
+                <book-list-item
+                    class="grid items-start gap-2"
+                >
+                    <template x-for="book in renderBookShelf" :key="book.id">
+                        <x-book.views.list-item />
+                    </template>
+                </book-list-item>
+            </template>
+
+            <template x-if="$store.viewOptions.view === 'grid'">
+                <book-list-grid
+                    class="grid items-start grid-cols-[repeat(auto-fit,150px)] justify-start gap-8 content-start"
+                >
+                    <template x-for="book in renderBookShelf" :key="book.id">
+                        <x-book.views.grid />
+                    </template>
+                </book-list-grid>
+            </template>
 
         </bookshelf-content>
 

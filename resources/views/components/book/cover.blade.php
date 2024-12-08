@@ -1,6 +1,8 @@
-@push('scripts')
-    <script src="{{ asset('/js/utils/bookAnimation.js') }}"></script>
-@endpush
+@once
+    @push('scripts')
+        <script src="{{ asset('/js/utils/bookAnimation.js') }}"></script>
+    @endpush
+@endonce
 
 <div
     x-data="{

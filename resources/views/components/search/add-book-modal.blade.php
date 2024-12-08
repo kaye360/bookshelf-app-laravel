@@ -4,29 +4,38 @@
     $book_tags = $bookService->formatExternalBookTags( $book['subject'] ?? []);
 @endphp
 
+@once
+    @push('scripts')
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('addBook', () => ({
+
+                    status : 'initial',
+
+                    async addBookHandler() {
+                        this.status = 'loading'
+
+                        const formData = new FormData({{ $book_key }})
+                        const entries = formData.entries()
+                        const body = JSON.stringify( Object.fromEntries( entries ) )
+
+                        const response = await Alpine.store('booksApi').create(body)
+                        if( response.id ) {
+                            this.status = 'success'
+                            hasBook = true
+                        } else {
+                            this.status = 'error'
+                        }
+                    },
+                }))
+            })
+        </script>
+    @endpush
+@endonce
+
 <x-layout.modal>
 
-    <add-book-modal
-        x-data="{
-            status : 'initial',
-
-            async addBookHandler() {
-                this.status = 'loading'
-
-                const formData = new FormData({{ $book_key }})
-                const entries = formData.entries()
-                const body = JSON.stringify( Object.fromEntries( entries ) )
-
-                const response = await $store.booksApi.create(body)
-                if( response.id ) {
-                    this.status = 'success'
-                    hasBook = true
-                } else {
-                    this.status = 'error'
-                }
-            },
-        }"
-    >
+    <add-book-modal x-data="addBook">
         <form
             method="POST"
             id="{{ $book_key }}"

@@ -110,6 +110,11 @@
     </x-book.view-option-heading>
 
     <button
+        x-on:click="$store.viewOptions.setParam('view', 'card')"
+        :class="{'opacity-40' : $store.viewOptions.view !== 'card', 'hover:underline mr-2' : true }"
+    >Card</button>
+
+    <button
         x-on:click="$store.viewOptions.setParam('view', 'grid')"
         :class="{'opacity-40' : $store.viewOptions.view !== 'grid', 'hover:underline mr-2' : true }"
     >Grid</button>
@@ -119,10 +124,7 @@
         :class="{'opacity-40' : $store.viewOptions.view !== 'list', 'hover:underline mr-2' : true }"
     >List</button>
 
-    <button
-        x-on:click="$store.viewOptions.setParam('view', 'card')"
-        :class="{'opacity-40' : $store.viewOptions.view !== 'card', 'hover:underline mr-2' : true }"
-    >Card</button>
+
 
 </view-select>
 

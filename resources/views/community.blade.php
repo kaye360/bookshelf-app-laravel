@@ -17,7 +17,7 @@
 
         @foreach ($community_posts as $communityPost )
 
-            <div x-data="{ bookTitle : '' }">
+            <div>
 
                 <h2 class="font-semibold text-lg mb-2 flex items-center gap-2">
                     @if ( $communityPost[0]['type'] === 'CREATE_BOOK' )
@@ -32,7 +32,9 @@
                     @if ( $communityPost[0]['type'] === 'JOIN' )
                         <x-i icon="user" size="sm" class="stroke-1" />
                     @endif
-                    {{ $communityPost[0]['username'] }}
+                    <a href="/user/{{ $communityPost[0]['username'] }}">
+                        {{ $communityPost[0]['username'] }}
+                    </a>
                     {{ communityPostTypeTitle($communityPost)[ $communityPost[0]['type'] ] }}
                 </h2>
 
@@ -40,18 +42,15 @@
                     @foreach ( array_slice($communityPost, 0, 10) as $book )
 
                         @if ( $book['type'] !== 'JOIN' )
-                            <a
-                                href="/books/{{ $book['key'] }}"
-                                class="relative rounded-lg border-2 border-transparent hover:border-primary-mid"
-                                x-on:mouseenter="bookTitle = `{{ $book['title'] }}`"
-                                x-on:mouseleave="bookTitle = ''"
-                            >
-                                <x-book.cover
-                                    src="'{{ $book['cover_url'] }}'"
-                                    title="'{{ $book['title'] }}'"
-                                    size="sm"
-                                />
-                            </a>
+                            <x-tooltip title="{{ $book['title'] }}">
+                                <a href="/books/{{ $book['key'] }}" class="relative rounded-lg">
+                                    <x-book.cover
+                                        src="'{{ $book['cover_url'] }}'"
+                                        title="'{{ $book['title'] }}'"
+                                        size="sm"
+                                    />
+                                </a>
+                            </x-tooltip>
                         @endif
 
                         @if ( $book['type'] === 'JOIN' )
@@ -72,8 +71,6 @@
                         </span>
                     @endif
                 </div>
-
-                <div x-text="bookTitle" class="h-8"></div>
 
             </div>
 

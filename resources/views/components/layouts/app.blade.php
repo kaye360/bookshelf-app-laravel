@@ -10,14 +10,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
         <meta name="csrf-token" content="{{ csrf_token() }}" id="csrf">
         @stack('scripts')
+        <script src="{{ asset('/js/layout/tooltip.js') }}"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.5/dist/cdn.min.js"></script>
     </head>
     <body class="bg-background text-text font-base">
 
-        <div
-            id="top"
-            class="w-full max-w-[1600px] mx-auto"
-        >
+        <div id="top" class="w-full max-w-[1600px] mx-auto">
 
             <x-layout.header />
 
@@ -28,6 +26,8 @@
             <x-layout.footer />
 
         </div>
+
+        <x-layout.tooltip />
 
     </body>
 </html>

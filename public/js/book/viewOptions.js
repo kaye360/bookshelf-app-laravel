@@ -29,10 +29,6 @@ document.addEventListener('alpine:init', () => {
 
         setParam(param, value) {
 
-            /**
-             * @todo add scroll to top once param is set
-             */
-
             if( !isValidParamKey(param) ) {
                 console.warn('Invalid param: ' + param)
                 return
