@@ -11,7 +11,7 @@
     }
 @endphp
 
-<x-layouts.app>
+<x-layouts.app title="Community">
 
     <div class="grid gap-8">
 

@@ -4,15 +4,16 @@
     <script src="{{ asset('/js/book/renderBooks.js') }}"></script>
 @endpush
 
-<x-layouts.app>
+<x-layouts.app title="Your bookshelf">
 
     {{-- Grid Wrapper --}}
     <bookshelf-grid
         x-data="{ isSidebarOpen : true }"
+        x-cloak
         :class="{
             'grid items-start transition-all duration-500' : true,
-            'grid-cols-[auto_200px] gap-14 ' : isSidebarOpen,
-            'grid-cols-[auto_46px] gap-2' : !isSidebarOpen,
+            'grid-cols-[1fr_200px] gap-14 ' : isSidebarOpen,
+            'grid-cols-[1fr_46px] gap-2' : !isSidebarOpen,
         }"
     >
 
@@ -95,7 +96,7 @@
         </bookshelf-content>
 
         {{-- View Options --}}
-        <view-options class="overflow-clip">
+        <view-options class="overflow-clip justify-self-end">
 
             <toggle-view-options class="text-right mb-4">
                 <button

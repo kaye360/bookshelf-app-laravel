@@ -10,6 +10,7 @@
         <div class="flex flex-wrap gap-x-2 text-xs">
             <template x-for="tag in JSON.parse(book.tags)">
                 <button
+                    class="text-left hover:underline"
                     x-on:click="$store.viewOptions.setParam('tag', tag)"
                     x-text="'#' + tag"
                 >

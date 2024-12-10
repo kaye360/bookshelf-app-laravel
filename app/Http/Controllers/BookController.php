@@ -100,10 +100,18 @@ class BookController extends Controller
         $book = $response->json();
         $book['hasBook'] = $this->bookService->hasBook( $book['key'] );
         $authors = $this->bookService->getAuthors($book);
+        $key = str_replace('/works/', '', $book['key'] );
+        $readers = Book::where('key', $key)
+            ->join('users', 'books.user_id', '=', 'users.id')
+            ->select('username')
+            ->get();
+
+        $readers->each( fn($reader) => $reader->initial = substr($reader->username, 0, 1) );
 
         return view('book', [
             'book' => $book,
-            'authors' => $authors
+            'authors' => $authors,
+            'readers' => $readers
         ]);
     }
 

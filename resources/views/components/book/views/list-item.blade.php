@@ -10,7 +10,7 @@
             <button
                 x-on:click="$store.viewOptions.setParam('tag', tag)"
                 x-text="'#' + tag"
-                class="hover:underline"
+                class="text-left hover:underline"
             >
             </button>
         </template>

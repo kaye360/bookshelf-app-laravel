@@ -3,7 +3,7 @@
     <script src="{{ asset('/js/book/api.js') }}"></script>
 @endpush
 
-<x-layouts.app>
+<x-layouts.app title="{{ $book['title'] }}">
 
     <section class="grid grid-cols-[3fr_2fr] gap-8 items-start">
 
@@ -14,22 +14,37 @@
                     {{ $book['title'] }}
                 </x-h1>
 
-                <div
+                <book-users
                     x-data="{
                         hasBook : {{ $book['hasBook'] ? 'true' : 'false' }},
                         showModal : false
                     }"
                     class="flex justify-between items-center"
                 >
-                    @isset( $book['first_publish_date'] )
-                        <p class="text-sm italic">
-                            First published on {{ print_r($book['first_publish_date']) }}
-                        </p>
-                    @endisset
+                    <book-readers class="flex items-center gap-1">
+                        @foreach ( $readers as $reader )
+                            <a
+                                href="/user/{{ $reader->username }}"
+                                class="w-8 h-8 grid place-items-center font-semibold aspect-square text-sm uppercase rounded-full bg-primary-light border border-primary-mid/50 hover:bg-accent shadow-md shadow-primary-mid/60"
+                            >
+                                {{ $reader->initial }}
+                            </a>
+                        @endforeach
+                        <span class="italic">
+                            {{ count($readers) }} {{ count($readers) === 1 ? 'user has' : 'users have' }} this book.
+                        </span>
+                    </book-readers>
+
                     <div>
                         <x-search.add-book-button-with-modal :$book />
                     </div>
-                </div>
+                </book-users>
+
+                @isset( $book['first_publish_date'] )
+                    <p class="text-sm italic">
+                        First published on {{ print_r($book['first_publish_date']) }}
+                    </p>
+                @endisset
 
                 @isset( $book['description'] )
                     <p>
@@ -52,7 +67,9 @@
                                         class="w-20 h-20 rounded-full object-cover"
                                     />
                                 @else
-                                    <span class="block w-20">NA</span>
+                                    <span class="w-20 h-20 rounded-full bg-primary-light/50 grid place-items-center text-white">
+                                        <x-i icon="user-round" size="lg" />
+                                    </span>
                                 @endif
                                 <span class="font-semibold">
                                     {{ $author['name'] }}
@@ -70,8 +87,6 @@
                         @endforeach
                     </div>
                 @endisset
-
-                {{-- Show how many likes --}}
 
             </book-content-sticky>
         </book-content-wrapper>

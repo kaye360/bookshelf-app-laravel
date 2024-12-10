@@ -1,4 +1,5 @@
-<x-layouts.app>
+
+<x-layouts.app title="Sign up a new account">
 
     <register-columns class="grid grid-cols-2 mx-auto w-fit gap-24 items-center">
 

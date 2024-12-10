@@ -2,7 +2,7 @@
     <script src="{{ asset('/js/book/api.js') }}"></script>
 @endpush
 
-<x-layouts.app>
+<x-layouts.app title="Search million of books!">
 
     <search-wrapper x-data="{ isSearchLoaderShown : false }">
 

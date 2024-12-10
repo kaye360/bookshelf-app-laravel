@@ -1,4 +1,5 @@
-<x-layouts.app>
+
+<x-layouts.app title="{{ Auth::user()->username }}">
 
     <div class="grid gap-6">
 

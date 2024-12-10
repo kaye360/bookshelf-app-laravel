@@ -1,4 +1,5 @@
-<x-layouts.app>
+
+<x-layouts.app title="Log in to your account">
 
     <login-columns class="grid grid-cols-2 w-fit mx-auto  gap-24 mt-12 items-center">
 

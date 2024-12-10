@@ -66,12 +66,12 @@
         <div
             x-show="show"
             :class="{
-                'p-2 bg-primary-light/50 grid place-items-center text-center text-lg font-semibold text-primary-dark/50 rounded select-none shadow-lg shadow-primary-dark/30' : true,
+                'p-2 bg-primary-light/50 grid place-items-center text-center text-lg font-semibold text-primary-dark/50 rounded select-none shadow-lg shadow-primary-dark/30 hyphens-auto' : true,
                 'w-[50px] h-[83px]' : size === 'sm',
                 'w-[100px] h-[166px]' : size === 'md',
                 'w-[150px] h-[250px]' : size === 'lg',
             }"
-            x-text="size === 'sm' ? title.slice(0,1) : title"
+            x-text="size === 'sm' ? title.slice(0,1) : title.slice(0, 25)"
             x-transition:enter="transition duration-500"
             x-transition:enter-start="opacity-0 scale-90"
             x-transition:enter-end="opacity-1 scale-100"
