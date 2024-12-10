@@ -79,7 +79,7 @@ class BookController extends Controller
 
         try {
             $response = Http::get("https://openlibrary.org/search.json?q=$query&lang=en&sort=rating desc");
-            $books = $this->bookService->formatExternalBookSearchResults($response);
+            $books = $this->bookService->appendHasBookToSearchResults($response->json());
         } catch(Exception $e) {
             return Redirect::to('/search?error=true');
         }
@@ -98,6 +98,7 @@ class BookController extends Controller
     {
         $response = Http::get("https://openlibrary.org/works/$key.json");
         $book = $response->json();
+        $book['hasBook'] = $this->bookService->hasBook( $book['key'] );
         $authors = $this->bookService->getAuthors($book);
 
         return view('book', [

@@ -15,29 +15,39 @@ document.addEventListener('alpine:init', () => {
         getTooltipOffset() {
             const tooltip = document.querySelector('tool-tip')
             const tooltipRect = tooltip.getBoundingClientRect()
-            return tooltipRect.width / 2
+            return Math.round( tooltipRect.width / 2 )
+        },
+
+        getxPos(tooltipRect, offset) {
+            const xPos = tooltipRect.left + tooltipRect.width / 2 - offset
+            return Math.round( xPos < 5 ? 10 : xPos )
+        },
+
+        getyPos(tooltipRect) {
+            return Math.round( tooltipRect.top - 40 + window.scrollY )
+        },
+
+        getPointerOffset(tooltip, xPos) {
+            const childRect = tooltip.firstElementChild.getBoundingClientRect()
+            const childCenter = Math.round( childRect.left + childRect.width / 2 )
+            return Math.round( childCenter - xPos )
         },
 
         onMouseenter() {
             const tooltipRect = el.getBoundingClientRect()
-            const childRect = el.firstElementChild.getBoundingClientRect()
-            const childCenter = childRect.left + childRect.width / 2
 
             Alpine.store('tooltip').title = title
             Alpine.store('tooltip').show = true
-            Alpine.store('tooltip').childxPos = tooltipRect.left
 
             setTimeout( () => {
                 const offset = this.getTooltipOffset()
+                const xPos = this.getxPos(tooltipRect, offset)
+                const yPos = this.getyPos(tooltipRect)
+                const pointerOffset = this.getPointerOffset(el, xPos)
 
-                let xPos = tooltipRect.left + tooltipRect.width / 2 - offset
-                    xPos = xPos < 5 ? 10 : xPos
-
-                const pointerOffset = childCenter - xPos
-
-                Alpine.store('tooltip').xPos = Math.round(xPos)
-                Alpine.store('tooltip').yPos = Math.round( tooltipRect.top - 40 + window.scrollY )
-                Alpine.store('tooltip').pointerOffset = Math.round( pointerOffset )
+                Alpine.store('tooltip').xPos = xPos
+                Alpine.store('tooltip').yPos = yPos
+                Alpine.store('tooltip').pointerOffset = pointerOffset
             }, 30 )
         },
 

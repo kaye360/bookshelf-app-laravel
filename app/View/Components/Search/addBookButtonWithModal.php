@@ -1,19 +1,17 @@
 <?php
 
-namespace App\View\Components\Search;
+namespace App\View\Components\search;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Book extends Component
+class addBookButtonWithModal extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public array $book,
-    )
+    public function __construct( public array $book )
     {
         //
     }
@@ -23,6 +21,6 @@ class Book extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.search.book');
+        return view('components.search.add-book-button-with-modal');
     }
 }

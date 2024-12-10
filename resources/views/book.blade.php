@@ -1,3 +1,8 @@
+
+@push('scripts')
+    <script src="{{ asset('/js/book/api.js') }}"></script>
+@endpush
+
 <x-layouts.app>
 
     <section class="grid grid-cols-[3fr_2fr] gap-8 items-start">
@@ -9,11 +14,22 @@
                     {{ $book['title'] }}
                 </x-h1>
 
-                @isset( $book['first_publish_date'] )
-                    <p class="text-sm italic">
-                        First published on {{ print_r($book['first_publish_date']) }}
-                    </p>
-                @endisset
+                <div
+                    x-data="{
+                        hasBook : {{ $book['hasBook'] ? 'true' : 'false' }},
+                        showModal : false
+                    }"
+                    class="flex justify-between items-center"
+                >
+                    @isset( $book['first_publish_date'] )
+                        <p class="text-sm italic">
+                            First published on {{ print_r($book['first_publish_date']) }}
+                        </p>
+                    @endisset
+                    <div>
+                        <x-search.add-book-button-with-modal :$book />
+                    </div>
+                </div>
 
                 @isset( $book['description'] )
                     <p>
@@ -54,6 +70,8 @@
                         @endforeach
                     </div>
                 @endisset
+
+                {{-- Show how many likes --}}
 
             </book-content-sticky>
         </book-content-wrapper>

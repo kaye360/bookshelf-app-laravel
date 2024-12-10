@@ -37,8 +37,6 @@ class BookService {
             ARRAY_FILTER_USE_KEY
         );
 
-        // dd($validated);
-
         // User ID
         $validated['user_id'] = Auth::user()->id;
 
@@ -85,10 +83,8 @@ class BookService {
      * @param response = API response
      *
      */
-    public function formatExternalBookSearchResults(object $response)
+    public function appendHasBookToSearchResults(array $books)
     {
-        $books = $response->json();
-
         foreach( $books['docs'] as &$book ) {
             $book['hasBook'] = BookService::hasBook($book['key']);
         }

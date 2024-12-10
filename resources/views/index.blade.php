@@ -50,7 +50,7 @@
 
                     <x-form.button
                         variant="ghost"
-                        class="text-primary-light border border-primary-light font-base"
+                        class="!text-primary-light border border-primary-light font-base"
                         x-data
                         x-on:click="location.href = '/login'"
                     >

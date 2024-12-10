@@ -1,5 +1,6 @@
 @php
     $title = $book['title'];
+    $book_key = str_replace('/works/', '', $book['key']);
     $src = isset($book['cover_edition_key'])
         ? "https://covers.openlibrary.org/b/olid/" . $book['cover_edition_key'] . ".jpg"
         : null
@@ -9,7 +10,7 @@
     class="flex items-start gap-4"
     x-data="{
         showModal : false,
-        hasBook : {{ $hasBook ? 'true' : 'false' }}
+        hasBook : {{ $book['hasBook'] ? 'true' : 'false' }},
     }"
 >
 
@@ -22,7 +23,9 @@
 
     <book-content class="flex flex-col gap-3 items-start">
         <h3 class="font-semibold text-2xl">
-            {{ $book['title'] }}
+            <a href="/books/{{ $book_key }}">
+                {{ $book['title'] }}
+            </a>
         </h3>
 
         @isset($book['author_name'])
@@ -33,28 +36,9 @@
             </book-authors>
         @endisset
 
-        <user-has-book-message
-            class="flex items-center gap-1 text-sm italic"
-            x-show="hasBook"
-        >
-            <x-i icon="circle-check-big" size="sm" />
-            You have this book in your bookshelf.
-        </user-has-book-message>
-
-        <button
-            class="flex items-center gap-1 px-3  py-1 text-primary-dark/80 font-semibold bg-primary-light/30"
-            x-on:click.stop="showModal = true"
-            x-show="!hasBook"
-        >
-            <x-i icon="square-plus" size="sm" />
-            Add Book
-        </button>
+        <x-search.add-book-button-with-modal :$book />
 
     </book-content>
-
-    @if( !$book['hasBook'] )
-        <x-search.add-book-modal :$book />
-    @endif
 
 </search-result-book>
 

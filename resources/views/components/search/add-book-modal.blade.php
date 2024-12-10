@@ -6,41 +6,19 @@
 
 @once
     @push('scripts')
-        <script>
-            document.addEventListener('alpine:init', () => {
-                Alpine.data('addBook', () => ({
-
-                    status : 'initial',
-
-                    async addBookHandler() {
-                        this.status = 'loading'
-
-                        const formData = new FormData({{ $book_key }})
-                        const entries = formData.entries()
-                        const body = JSON.stringify( Object.fromEntries( entries ) )
-
-                        const response = await Alpine.store('booksApi').create(body)
-                        if( response.id ) {
-                            this.status = 'success'
-                            hasBook = true
-                        } else {
-                            this.status = 'error'
-                        }
-                    },
-                }))
-            })
-        </script>
+        <script src="{{ asset('/js/utils/form.js') }}"></script>
+        <script src="{{ asset('/js/book/handlers.js') }}"></script>
     @endpush
 @endonce
 
 <x-layout.modal>
 
-    <add-book-modal x-data="addBook">
+    <add-book-modal x-data="addBookHandler('{{ $book_key }}')">
         <form
             method="POST"
             id="{{ $book_key }}"
             class="relative grid gap-2"
-            x-on:submit.prevent="addBookHandler()"
+            x-on:submit.prevent="onSubmit()"
         >
 
             <input type="hidden" name="key" value="{{ $book['key'] }}" />

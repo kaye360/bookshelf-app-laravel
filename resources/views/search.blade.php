@@ -54,7 +54,7 @@
 
             <search-results class="grid gap-8">
                 @foreach ( $result as $book )
-                    <x-search.book :$book hasBook="{{ $book['hasBook'] }}" />
+                    <x-search.book :$book />
                 @endforeach
             </search-results>
 
