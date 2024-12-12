@@ -22,6 +22,6 @@
     You have this book in your bookshelf.
 </user-has-book-message>
 
-@if( !$book['hasBook'] )
+@if( !$book->hasBook )
     <x-search.add-book-modal :$book />
 @endif

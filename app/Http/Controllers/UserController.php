@@ -10,14 +10,16 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
+
+    public function __construct( public CommunityPostController $communityPostController)
+    { }
+
     public function store(CreateUserRequest $request)
     {
         $validated = $request->validated();
         $user = User::create($validated);
         Auth::login($user);
-
-        $communityPost = new CommunityPostController;
-        $communityPost->store(null, 'JOIN');
+        $this->communityPostController->store(null, 'JOIN');
         return redirect('/books');
     }
 

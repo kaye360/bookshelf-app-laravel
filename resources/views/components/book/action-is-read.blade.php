@@ -1,6 +1,6 @@
 
 {{-- Is Read --}}
-<x-tooltip title="Read">
+<x-tooltip title="'Read'">
     <x-book.action-button
         x-on:click="
             $store.booksApi.update(book.id, { is_read : !book.is_read })

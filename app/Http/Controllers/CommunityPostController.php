@@ -4,22 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\CommunityPost;
+use App\Services\CommunityPostService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class CommunityPostController extends Controller
 {
+
+    public function __construct(private CommunityPostService $communityPostService)
+    {
+    }
+
     public function index()
     {
-        // $communityPosts = CommunityPost::all()->sortByDesc('created_at');
-        $communityPosts = CommunityPost::orderBy('updated_at', 'desc')->get()
-            ->groupBy(['username','type'])
-            ->map( fn($group) => $group->values()->toArray() )
-            ->collapse()
-            ->toArray();
-        return view('community', [
-            'community_posts' => $communityPosts
-        ]);
+        return view('community');
+    }
+
+    public function get(string $page)
+    {
+        $communityPosts = CommunityPostService::getPosts($page);
+        return response()->json($communityPosts);
     }
 
     public function store(?Book $book, string $type)

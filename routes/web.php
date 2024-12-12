@@ -4,6 +4,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CommunityPostController;
 use App\Http\Controllers\ExternalBookSearchController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,5 +36,6 @@ Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanc
 
 Route::get('/books', [BookController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/books/{key}', [BookController::class, 'show'])->middleware('auth:sanctum');
-Route::get('/search', [BookController::class, 'search'])->middleware('auth:sanctum');
-Route::get('/search-result', [BookController::class, 'searchResult'])->middleware('auth:sanctum');
+
+Route::get('/search', [SearchController::class, 'search']);
+Route::get('/search-result', [SearchController::class, 'result']);

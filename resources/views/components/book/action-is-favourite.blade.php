@@ -1,5 +1,5 @@
 
-<x-tooltip title="Favourite">
+<x-tooltip title="'Favourite'">
     <x-book.action-button x-on:click=" () => {
         $store.booksApi.update(book.id, { is_favourite : !book.is_favourite })
         book.is_favourite = !book.is_favourite

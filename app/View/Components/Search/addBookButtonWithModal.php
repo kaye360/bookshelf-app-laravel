@@ -2,6 +2,7 @@
 
 namespace App\View\Components\search;
 
+use app\Dto\ExternalApiBookDto;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -11,7 +12,7 @@ class addBookButtonWithModal extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct( public array $book )
+    public function __construct( public ExternalApiBookDto $book )
     {
         //
     }

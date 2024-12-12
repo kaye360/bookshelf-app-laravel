@@ -11,6 +11,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" id="csrf">
         @stack('scripts')
         <script src="{{ asset('/js/layout/tooltip.js') }}"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.5/dist/cdn.min.js"></script>
     </head>
     <body class="bg-background text-text font-base">

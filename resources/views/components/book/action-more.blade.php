@@ -1,5 +1,5 @@
 
-<x-tooltip title="More">
+<x-tooltip title="'More'">
     <x-book.action-button x-on:click="showMoreActions = !showMoreActions">
         <x-i icon="ellipsis-vertical" size="sm" class="stroke-1" />
     </x-book.action-button>

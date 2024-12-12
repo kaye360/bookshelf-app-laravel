@@ -1,5 +1,5 @@
 
-<x-tooltip title="Owned">
+<x-tooltip title="'Owned'">
     <x-book.action-button x-on:click=" () => {
         $store.booksApi.update(book.id, { is_owned : !book.is_owned })
         book.is_owned = !book.is_owned

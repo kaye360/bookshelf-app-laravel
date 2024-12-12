@@ -1,8 +1,3 @@
-@php
-    $book_key = str_replace('/works/', '', $book['key']);
-    $book_authors = $book['author_name'] ?? [];
-    $book_tags = $bookService->formatExternalBookTags( $book['subject'] ?? []);
-@endphp
 
 @once
     @push('scripts')
@@ -13,32 +8,32 @@
 
 <x-layout.modal>
 
-    <add-book-modal x-data="addBookHandler('{{ $book_key }}')">
+    <add-book-modal x-data="addBookHandler('{{ $book->key }}')">
         <form
             method="POST"
-            id="{{ $book_key }}"
+            id="{{ $book->key }}"
             class="relative grid gap-2"
             x-on:submit.prevent="onSubmit()"
         >
 
-            <input type="hidden" name="key" value="{{ $book['key'] }}" />
-            <input type="hidden" name="title" value="{{ $book['title'] }}" />
-            <input type="hidden" name="authors" value="{{ json_encode($book_authors)  }}" />
+            <input type="hidden" name="key" value="{{ $book->key }}" />
+            <input type="hidden" name="title" value="{{ $book->title }}" />
+            <input type="hidden" name="authors" value="{{ json_encode($book->authors)  }}" />
 
-            @isset($book['number_of_pages_median'])
-                <input type="hidden" name="page_count" value="{{ $book['number_of_pages_median'] }}" />
+            @isset($book->pageCount)
+                <input type="hidden" name="page_count" value="{{ $book->pageCount }}" />
             @endisset
 
-            @isset($book['cover_edition_key'])
+            @isset($book->covers[0])
                 <input
                     type="hidden"
                     name="cover_url"
-                    value="https://covers.openlibrary.org/b/olid/{{ $book['cover_edition_key'] }}.jpg"
+                    value="{{ $book->covers[0] }}"
                 />
             @endisset
 
             <h2 class="font-semibold">
-                {{ $book['title'] }}
+                {{ $book->title }}
             </h2>
 
             <label class="flex items-center gap-1">
@@ -57,11 +52,11 @@
                     Suggested tags:
                 </h2>
 
-                @if( count($book_tags) > 0 )
+                @if( count($book->randomTags) > 0 )
 
                     <suggested-tags-wrapper class="flex items-center flex-wrap gap-3 mt-2 text-sm">
 
-                        @foreach ($book_tags as $tag)
+                        @foreach ($book->randomTags as $tag)
 
                             <suggested-tag
                                 x-ref="tag{{ $loop->index }}"

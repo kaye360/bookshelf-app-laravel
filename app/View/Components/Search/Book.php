@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Search;
 
+use app\Dto\ExternalApiBookDto;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -12,7 +13,7 @@ class Book extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public array $book,
+        public ExternalApiBookDto $book,
     )
     {
         //
