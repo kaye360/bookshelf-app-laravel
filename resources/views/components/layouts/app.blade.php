@@ -30,5 +30,7 @@
 
         <x-layout.tooltip />
 
+        <x-layout.back-to-top />
+
     </body>
 </html>

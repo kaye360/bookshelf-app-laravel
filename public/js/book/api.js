@@ -6,6 +6,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         books : [],
+        status : 'initial',
 
         async getAll() {
             const response = await fetch(`/api/books`, {
@@ -14,6 +15,7 @@ document.addEventListener('alpine:init', () => {
             })
             const json = await response.json()
             this.books = json
+            this.status = 'loaded'
         },
 
         async create(body) {

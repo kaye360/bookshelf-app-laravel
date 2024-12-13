@@ -93,6 +93,19 @@
                 </book-list-grid>
             </template>
 
+            {{-- Empty bookshelf --}}
+            <template x-if="$store.booksApi.books.length === 0 && $store.booksApi.status === 'loaded'">
+                    <div class="flex flex-col items-center gap-3 text-lg mt-6 w-fit mx-auto">
+                        <x-i icon="book-marked" size="xl" class="text-primary-light" />
+                        <span class="text-xl">
+                            Your bookshelf is empty.
+                        </span>
+                        <span class="text-base">
+                            Add some by <a href="/search">searching</a> or browsing the <a href="/community">community</a>!
+                        </span>
+                    </div>
+            </template>
+
         </bookshelf-content>
 
         {{-- View Options --}}

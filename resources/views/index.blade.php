@@ -13,23 +13,25 @@
     </head>
     <body class="bg-background text-text font-base">
 
-        <section class="bg-[#182022]">
-            <hero-section class="h-[70vh] relative w-full max-w-[1200px] mx-auto ">
+        <section class="bg-[#01010E] relative">
+            <hero-section
+                class=" relative w-full max-w-[1200px] mx-auto bg-contain bg-no-repeat bg-[70%_center] bg-opacity-50 flex items-center h-[90vh] px-12"
+                style="background-image : url('{{ asset('/img/hero-4.webp') }}')"
+            >
 
-                <img src="{{ asset('/img/hero-3.webp') }}" class="w-auto h-full object-contain mx-auto" />
-
-                <logo-top class="absolute left-12 right-12 top-6 flex justify-between">
+                <nav-top class="absolute left-12 right-12 top-6 z-20 flex justify-between">
                     <div class="mix-blend-plus-lighter">
                         <x-layout.logo />
                     </div>
                     <a href="/community" class=" text-gray-300">
                         Community
                     </a>
-                </logo-top>
+                </nav-top>
 
-                <hero-content class="absolute left-12 top-1/2 -translate-y-1/2 max-w-md font-theme  text-white flex flex-col gap-6" >
 
-                    <hero-heading class="text-5xl font-normal leading-[3rem] tracking-wide select-none">
+                <hero-content class="max-w-md font-theme  text-white flex flex-col gap-6" >
+
+                    <hero-heading class="text-4xl font-normal leading-[3rem] tracking-wide select-none">
                         Track your book collection with <span class="text-accent">Hoot</span>Reads
                     </hero-heading>
 
@@ -61,7 +63,16 @@
                     </x-form.button>
 
                 </hero-content>
+
             </hero-section>
+        </section>
+
+        <section class="h-screen">
+            Section 2
+        </section>
+
+        <section class="h-screen bg-primary-light">
+            Section 3
         </section>
 
     </body>

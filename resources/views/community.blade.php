@@ -23,7 +23,10 @@
                     <template x-if="post.type === 'JOIN'">
                         <x-i icon="user" size="sm" />
                     </template>
-                    <a :href="`/user/${post.username}`" x-text="post.username + ' ' + post.title"></a>
+                    <span>
+                        <a :href="`/user/${post.username}`" x-text="post.username"></a>
+                        <span x-text="post.title"></span>
+                    </span>
                 </community-post-title>
 
                 <community-post-content class="flex items-center flex-wrap gap-4 mb-2">

@@ -12,7 +12,6 @@ document.addEventListener('alpine:init', () => {
         async nextPage() {
             const response = await fetch(`/api/community-posts/${this.currentPage}`)
             const json = await response.json()
-            console.log(json)
 
             if( !json ) {
                 this.isAtEnd = true

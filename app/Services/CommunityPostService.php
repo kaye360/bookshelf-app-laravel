@@ -21,7 +21,7 @@ class CommunityPostService {
     {
         $cp = [];
 
-        CommunityPost::orderBy('updated_at', 'desc')->chunk(100, function(Collection $posts) use (&$cp) {
+        CommunityPost::orderBy('updated_at', 'desc')->chunk(75, function(Collection $posts) use (&$cp) {
             $cp[] = $posts->groupBy(['username','type'])
                 ->map( fn($group) => $group->values()->toArray() )
                 ->collapse()
