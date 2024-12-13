@@ -4,6 +4,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CommunityPostController;
 use App\Http\Controllers\ExternalBookSearchController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,8 @@ Route::view('/dashboard', 'dashboard')->middleware('auth:sanctum');
 
 Route::get('/community', [CommunityPostController::class, 'index']);
 
-Route::view('/user', 'user');
+Route::get('/user', [ProfileController::class, 'index']);
+Route::get('/user/{username}', [ProfileController::class, 'index']);
 
 Route::view('/register', 'register');
 Route::post('/register', [UserController::class, 'store']);

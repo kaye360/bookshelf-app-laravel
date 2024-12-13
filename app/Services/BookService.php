@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Http\Controllers\CommunityPostController;
 use App\Models\Book;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
@@ -122,20 +123,37 @@ class BookService {
 
     /**
      *
-     * Gets a list of authorized user tags with counts of each tag
+     * Gets a list of tags in users books with counts of each tag
      * Sorted by highest count to lowest
      *
      */
-    public function getUserTags()
+    public static function getUserTags( int $userId = null )
     {
-        return Book::where('user_id', Auth::user()->id)
+        $userId ??= Auth::user()->id;
+        return Book::where('user_id', $userId)
             ->pluck('tags')
             ->map( fn( $item ) => json_decode($item, true) )
             ->flatten()
             ->countBy()
             ->sortByDesc( fn($count) => $count )
             ->slice(0,10)
-            ->map( fn( $count, $tag) => [ 'tag' => $tag, 'count' => $count ])
+            ->map( fn( $count, $tag) => (object) [ 'tag' => $tag, 'count' => $count ])
             ->values();
+    }
+
+    /**
+     *
+     * Get a list of authors within users books
+     *
+     */
+    public static function getUserAuthors( Collection $books )
+    {
+        return $books->pluck('authors')
+            ->map( fn($author) => json_decode($author))
+            ->flatten()
+            ->unique('name')
+            ->values()
+            ->shuffle()
+            ->toArray();
     }
 }
