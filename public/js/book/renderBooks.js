@@ -38,7 +38,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         filterByTag(tag) {
-            this.books = this.books.filter( book => JSON.parse( book.tags ).includes(tag) )
+            this.books = this.books.filter( book => book.tags.includes(tag) )
         },
 
         filterBy(filter) {

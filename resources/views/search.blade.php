@@ -29,7 +29,7 @@
         </form>
 
         @if ( $errors )
-            <error-message class="my-4">
+            <error-message class="block py-12">
                 Something went wrong with your search. Please try again later.
             </error-message>
         @endif

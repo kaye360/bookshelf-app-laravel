@@ -21,7 +21,7 @@ class CreateBookDto {
     {
         $this->key          = BookService::getKey( $validated['key'] );
         $this->title        = $validated['title'];
-        $this->authors      = $validated['authors'];
+        $this->authors      = $this->getAuthors( $validated['authors']);
         $this->tags         = $this->getTagsFromInputs( $validated );
         $this->user_id      = Auth::user()->id;
         $this->is_read      = isset($validated['is_read']) && $validated['is_read'] === 'on';
@@ -39,6 +39,21 @@ class CreateBookDto {
     public function toArray()
     {
         return get_object_vars( $this );
+    }
+
+    /**
+     *
+     * Extract author names into array
+     *
+     */
+    private function getAuthors(string $authors) : string
+    {
+        $authors = json_decode($authors);
+        $authors = array_map( fn($author) => (object) [
+            'name' => $author->name,
+            'key' => $author->key
+        ], $authors);
+        return json_encode($authors);
     }
 
     /**

@@ -27,13 +27,13 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
-        if( !Auth::attempt($validated) ) {
-            throw ValidationException::withMessages([
-                'username' => 'Incorrect username or password. Please try again.'
-            ]);
+        if( Auth::attempt($validated) ) {
+            return redirect()->intended('/books');
         }
-        $request->session()->regenerate();
-        return redirect('/books');
+
+        throw ValidationException::withMessages([
+            'username' => 'Incorrect username or password. Please try again.'
+        ]);
     }
 
     public function logout()

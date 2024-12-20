@@ -49,7 +49,7 @@
                 status = 'success'
                 setTimeout( () => status = 'initial', 5000)
             }
-            book.tags = JSON.stringify( tagList )
+            book.tags = tagList
         "
     >
         <x-slot:icon>

@@ -28,12 +28,8 @@ class SearchController extends Controller
 
 
         try {
-            $response = Http::get("https://openlibrary.org/search.json?q=$query&lang=en&sort=rating desc")->json();
-
-            // dd($response['docs']);
-
+            $response = Http::get("https://openlibrary.org/search.json?q=$query&lang=en")->json();
             $books = array_map( fn($book) => new ExternalApiBookDto($book), $response['docs']);
-            // dd( Arr::pluck($books, 'covers'));
         } catch(Exception $e) {
             return Redirect::to('/search?error=true');
         }

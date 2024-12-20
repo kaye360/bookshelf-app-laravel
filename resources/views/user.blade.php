@@ -75,9 +75,9 @@
 
             <div class="flex flex-wrap gap-x-4 gap-y-2">
 
-                @foreach ( $authors as $author )
-                    <a href="/author/{{ $author->key }}">
-                        {{ $author->name }}
+                @foreach ( array_slice( $authors, 0, 10) as $author )
+                    <a href="/author/{{ $author }}">
+                        {{ $author }}
                     </a>
                 @endforeach
             </div>

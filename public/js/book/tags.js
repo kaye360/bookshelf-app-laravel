@@ -11,14 +11,14 @@ document.addEventListener('alpine:init', () => {
 
                 // Close without saving changes and reset modal
                 if( !this.showModal ) {
-                    this.tags = JSON.parse(book.tags).join(' ').trim() || ''
+                    this.tags = book.tags.join(' ').trim() || ''
                     this.checkIfHasTags()
                     this.showEdit = false
                 }
             })
         },
 
-        tags : book && JSON.parse(book.tags).join(' ').trim() || '',
+        tags : book && book.tags.join(' ').trim() || '',
         tagList : [],
         status : 'initial',
 

@@ -14,7 +14,12 @@ document.addEventListener('alpine:init', () => {
                 headers : getHeaders()
             })
             const json = await response.json()
-            this.books = json
+            this.books = json.map( book => ({
+                ...book,
+                authors : JSON.parse(book.authors),
+                tags : JSON.parse(book.tags),
+            }))
+            console.log(this.books)
             this.status = 'loaded'
         },
 

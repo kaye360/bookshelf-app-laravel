@@ -13,7 +13,7 @@
         :class="{
             'grid items-start transition-all duration-500' : true,
             'grid-cols-[1fr_200px] gap-14 ' : isSidebarOpen,
-            'grid-cols-[1fr_46px] gap-2' : !isSidebarOpen,
+            'grid-cols-[1fr_36px] gap-2' : !isSidebarOpen,
         }"
     >
 
@@ -111,10 +111,10 @@
         {{-- View Options --}}
         <view-options class="overflow-clip justify-self-end">
 
-            <toggle-view-options class="text-right mb-4">
+            <toggle-view-options class="mb-8">
                 <button
                     x-on:click="isSidebarOpen = !isSidebarOpen"
-                    class="inline-flex items-center gap-1 text-sm text-primary-dark hover:bg-primary-light p-2 rounded-xl"
+                    class="flex items-center justify-end gap-1 text-sm text-primary-dark hover:bg-primary-light p-2 ml-auto rounded-xl"
                 >
                     <span x-show="isSidebarOpen" class="text-sm min-w-max">Hide options</span>
                     <x-i icon="ellipsis-vertical" size="md" class="stroke-2" x-show="!isSidebarOpen" />

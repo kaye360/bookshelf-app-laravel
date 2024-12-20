@@ -1,12 +1,14 @@
 
-<div class="grid grid-cols-[50px_1.5fr_1fr_auto] gap-4 items-center hover:bg-background-accent">
+<div class="grid grid-cols-[50px_1fr_1fr_1fr_auto] gap-4 items-center hover:bg-background-accent">
 
     <x-book.cover src="book.cover_url" title="book.title" size="sm" />
 
     <span class="font-semibold" x-text="book.title"></span>
 
+    <span class="text-sm" x-text="book.authors.map(author => author.name).join(', ')"></span>
+
     <div class="flex flex-wrap gap-x-2 gap-y-1 text-xs">
-        <template x-for="tag in JSON.parse(book.tags)">
+        <template x-for="tag in book.tags">
             <button
                 x-on:click="$store.viewOptions.setParam('tag', tag)"
                 x-text="'#' + tag"

@@ -22,6 +22,8 @@
         class="absolute right-1 bottom-0 p-4 bg-primary-light hover:bg-primary-mid rounded-md flex items-center gap-1 text-sm font-medium"
     >
         <x-i icon="arrow-up" size="sm" />
-        Back to top
+        <span class="hidden md:block">
+            Back to top
+        </span>
     </button>
 </div>

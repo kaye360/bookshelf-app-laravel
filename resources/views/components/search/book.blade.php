@@ -25,7 +25,6 @@
         @isset($book->authors)
             <book-authors class="flex items-center gap-2 flex-wrap text-md font-semibold">
                 @foreach ( $book->authors as $author )
-                    {{-- {{ print_r($author) }} --}}
                     {{ $author->name }}
                 @endforeach
             </book-authors>

@@ -67,7 +67,7 @@
                                         <x-i icon="user-round" size="lg" />
                                     </span>
                                 @endif
-                                <a href="/aurhor/{{ $author->key }}" class="font-semibold">
+                                <a href="/author/{{ $author->key }}" class="font-semibold">
                                     {{ $author->name }}
                                 </a>
                             </div>

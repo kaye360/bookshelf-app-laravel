@@ -26,8 +26,8 @@ Route::view('/dashboard', 'dashboard')->middleware('auth:sanctum');
 
 Route::get('/community', [CommunityPostController::class, 'index']);
 
-Route::get('/user', [ProfileController::class, 'index']);
-Route::get('/user/{username}', [ProfileController::class, 'index']);
+Route::get('/user', [ProfileController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/user/{username}', [ProfileController::class, 'index'])->middleware('auth:sanctum');
 
 Route::view('/register', 'register');
 Route::post('/register', [UserController::class, 'store']);
@@ -39,5 +39,5 @@ Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanc
 Route::get('/books', [BookController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/books/{key}', [BookController::class, 'show'])->middleware('auth:sanctum');
 
-Route::get('/search', [SearchController::class, 'search']);
-Route::get('/search-result', [SearchController::class, 'result']);
+Route::get('/search', [SearchController::class, 'search'])->middleware('auth:sanctum');
+Route::get('/search-result', [SearchController::class, 'result'])->middleware('auth:sanctum');

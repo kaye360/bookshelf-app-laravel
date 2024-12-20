@@ -34,8 +34,8 @@
 <filter-select class="flex flex-col gap-2 items-start " x-data>
 
     <x-book.view-option-heading>
-        <x-i icon="list-filter" size="sm" />
         Filter
+        <x-i icon="list-filter" size="sm" />
     </x-book.view-option-heading>
 
     <button
@@ -76,8 +76,8 @@
 <sort-select class="flex flex-col gap-2 items-start" x-data>
 
     <x-book.view-option-heading>
-        <x-i icon="arrow-up-down" size="sm" />
         Sort
+        <x-i icon="arrow-up-down" size="sm" />
     </x-book.view-option-heading>
 
     <button
@@ -105,8 +105,8 @@
 <view-select class="flex flex-col gap-2 items-start" x-data>
 
     <x-book.view-option-heading>
-        <x-i icon="layout-list" size="sm" />
         View
+        <x-i icon="layout-list" size="sm" />
     </x-book.view-option-heading>
 
     <button
@@ -131,8 +131,8 @@
 <tag-select class="flex flex-col gap-2 items-start" x-data>
 
     <x-book.view-option-heading>
-        <x-i icon="tags" size="sm" />
         Popular tags
+        <x-i icon="tags" size="sm" />
     </x-book.view-option-heading>
 
     <button
